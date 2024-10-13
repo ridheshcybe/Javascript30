@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drum</title>
+    <style>
+        .top {
+            background-image: url("https://unsplash.com/photos/gcDwzUGuUoI/download?ixid=M3wxMjA3fDB8MXxzZWFyY2h8Mnx8Y3Jvd2R8ZW58MHx8fHwxNzI4NzIyNDkwfDA&force=true&w=2400");
+            display: flex;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+        }
+
+        .key {
+            background-color: rgba(0, 0, 0, 0.5);
+            margin-right: 10px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            margin: 5px 1% 5px 1%;
+            float: left;
+            position: relative;
+            transition: height 0.5s;
+            -webkit-transition: height 0.5s;
+            text-align: center;
+            overflow: hidden;
+            border: black 9px solid;
+            transition: 1s;
+        }
+
+        .key:hover {
+            width: 10%;
+            border: yellow 10px solid;
+        }
+
+        .key>h1 {
+            color: white;
+        }
+
+        .key>p {
+            color: yellow;
+        }
+    </style>
+</head>
+
+<body class="top">
+    <div class="key" data="a">
+        <h1>A</h1>
+        <p>CLAP</p>
+    </div>
+    <div class="key" data="s">
+        <h1>S</h1>
+        <p>HHAT</p>
+    </div>
+    <div class="key" data="d">
+        <h1>D</h1>
+        <p>KICK</p>
+    </div>
+    <div class="key" data="f">
+        <h1>F</h1>
+        <p>OPENHAT</p>
+    </div>
+    <div class="key" data="g">
+        <h1>G</h1>
+        <p>BOOM</p>
+    </div>
+    <div class="key" data="h">
+        <h1>H</h1>
+        <p>RIDE</p>
+    </div>
+    <div class="key" data="j">
+        <h1>J</h1>
+        <p>SHARE</p>
+    </div>
+    <div class="key" data="k">
+        <h1>K</h1>
+        <p>TOM</p>
+    </div>
+    <div class="key" data="l">
+        <h1>L</h1>
+        <p>TINK</p>
+    </div>
+    <audio src="" id="audio"></audio>
+    <script src="./drum.js"></script>
+</body>
+
+</html>
