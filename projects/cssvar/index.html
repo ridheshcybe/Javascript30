@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update css with js</title>
+    <style>
+        body {
+            background-color: yellow
+        }
+    </style>
+</head>
+
+<body id="btn">
+    <button onclick="run()">change color</button>
+    <script>
+        function random() {
+            return Math.floor(Math.random() * (256 - 0))
+        }
+        function run() {
+            document.getElementById("btn").style.backgroundColor = `rgb(${random()},${random()},${random()})`
+        }
+    </script>
+</body>
+
+</html>
