@@ -108,5 +108,5 @@ const fifteen = arr.filter(e => obj[e] > 2000 && obj[e] < 2200);
 const newarr = arr.map(e => { return { "year": obj[e], "name": e } });
 //sort
 const sorted = arr.sort((a, b) => obj[a] > obj[b] ? 1 : -1)
-//reduce
-const reduced = arr.reduce((total, current) => total + current)
+
+console.log(fifteen)
