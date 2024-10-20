@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canavas</title>
+    <style>
+        .config-box>h4 {
+            margin-top: 0;
+        }
+
+        .config-box {
+            position: fixed;
+            /* Keeps the box fixed in one position */
+            top: 10px;
+            /* 10px from the top */
+            right: 10px;
+            /* 10px from the right */
+            width: 200px;
+            /* Box width */
+            padding: 15px;
+            /* Internal padding */
+            background-color: white;
+            /* Background color of the box */
+            border: 1px solid #ccc;
+            /* Light border */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+            z-index: 1000;
+            /* High z-index to stay above other elements */
+            pointer-events: auto;
+            /* Allow interaction */
+            border-radius: 7.5%;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .blue {
+            margin: 0;
+            border: 2px solid blue;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="config-box blue" id="configBox">
+        <h4>Settings</h4>
+        <label for="theme">Theme</label>
+        <select id="theme">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+        </select>
+        <p>Is Drawing: <span id="isdraw">False</span></p>
+        <p>
+            X: <span id="mouseX">0</span><br>
+            Y: <span id="mouseY">0</span>
+        </p>
+        <label for="linejoin">LineJoin</label>
+        <select id="linejoin">
+            <option value="round" title="">round</option>
+            <option value="bevel" title="">bevel</option>
+            <option value="miter" title="">miter</option>
+        </select><br>
+        <label for="linecap">LineCap</label>
+        <select id="linecap">
+            <option value="butt" title="The ends of lines are squared off at the endpoints.">
+                butt</option>
+            <option value="round" title="The ends of lines are rounded. Default value.">round</option>
+            <option value="square" title="The ends of lines are squared off by adding a box with an equal width and half the height of the line's
+            thickness.">square</option>
+        </select>
+    </div>
+
+    <div id="draw"></div>
+    <script>
+        let isDrawing = false;
+        let last = [window.innerHeight / 2, window.innerWidth / 2];
+        const lastHTML = [document.getElementById("mouseX"), document.getElementById("mouseY")]
+        const div = document.getElementById("draw");
+        const theme = document.getElementById("theme");
+        const isDraw = document.getElementById("isdraw");
+        const configBox = document.getElementById("configBox");
+        const lineCap = document.getElementById("linecap")
+        const lineJoin = document.getElementById("linejoin");
+
+        let canvas = document.createElement("canvas");
+        let ctx = canvas.getContext('2d');
+
+        function mouseDown(ev) {
+            last[0] = lastHTML[0].innerText = ev.offsetX;
+            last[1] = lastHTML[1].innerText = ev.offsetY;
+
+            isDraw.innerHTML = 'True'
+            isDrawing = true;
+        }
+
+        function notDrawing() {
+            isDrawing = false;
+            isDraw.innerHTML = 'False';
+        }
+
+        function setup() {
+            canvas.remove();
+            canvas.removeEventListener("mousemove", loop)
+            canvas.removeEventListener("mouseup", notDrawing);
+            canvas.removeEventListener("mouseout", notDrawing);
+            canvas.removeEventListener("mousedown", mouseDown);
+
+            canvas = document.createElement("canvas");
+            ctx = canvas.getContext('2d');
+            canvas.addEventListener("mousemove", loop)
+            canvas.addEventListener("mouseup", notDrawing);
+            canvas.addEventListener("mouseout", notDrawing);
+            canvas.addEventListener("mousedown", mouseDown);
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.resetTransform();
+
+            ctx.fillStyle = '#000000';  // Default fill style is black
+            ctx.strokeStyle = '#000000'; // Default stroke style is black
+            ctx.lineWidth = 1;           // Default line width
+            ctx.globalAlpha = 1.0;       // Reset opacity to full
+            ctx.lineCap = 'butt';        // Reset line cap style
+            ctx.lineJoin = 'miter';      // Reset line join style
+            ctx.setLineDash([]);         // Reset dashed lines
+            ctx.shadowColor = 'transparent'; // Remove any shadows
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            ctx.lineJoin = lineJoin.value || "round";
+            ctx.lineCap = lineCap.value || "round";
+
+            div.appendChild(canvas);
+        }
+
+        function loop(ev) {
+            if (!isDrawing) return;
+            ctx.beginPath();
+            ctx.moveTo(...last);
+            last[0] = lastHTML[0].innerText = ev.offsetX;
+            last[1] = lastHTML[1].innerText = ev.offsetY;
+            ctx.strokeStyle = `hsl(${Math.floor(Math.random() * 360)}, 100%,50%)`;
+            ctx.lineTo(...last);
+            ctx.lineWidth = 10;
+            ctx.stroke();
+        }
+
+
+        lineJoin.onchange = () => {
+            setup();
+            console.log(0)
+            ctx.lineJoin = lineJoin.value || "round";
+        }
+
+        lineCap.onchange = () => {
+            setup();
+            console.log(1)
+            ctx.lineCap = lineCap.value || "round";
+        }
+
+        theme.onchange = () => {
+            setup();
+            const isLight = theme.value == "light";
+            ctx.fillStyle = isLight ? "#FFFFFF" : "#000000";
+            configBox.style.backgroundColor = isLight ? "#FFFFFF" : "#000000";
+            configBox.style.color = isLight ? "#000000" : "#FFFFFF";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        setup();
+    </script>
+</body>
+
+</html>
