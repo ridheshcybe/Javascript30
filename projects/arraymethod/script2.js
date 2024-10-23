@@ -8,9 +8,11 @@ const comments = [
 
 const isAdult = people.some(e => e.age >= 19)
 const isEveryoneAdult = people.every(e => e.age >= 19);
+const flat = [1, [2]].flat(2);
 
 const findID = comments.find(e => e.id == 29402);
 const findIndex = comments.findIndex(e => e.id == 29402);
 
+console.log(flat);
 console.table({ isAdult, isEveryoneAdult })
 console.table({ findID, find: comments[findIndex] })
