@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const pressed = [];
+        const code = 'ridhesh';
+
+        window.addEventListener('keyup', (e) => {
+            pressed.push(e.key);
+            pressed.splice(-code.length - 1, pressed.length - code.length)
+            if (pressed.join('').includes(code)) {
+                document.write('correct')
+            }
+        })
+    </script>
+</body>
+
+</html>
